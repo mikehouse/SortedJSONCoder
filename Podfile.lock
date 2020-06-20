@@ -1,0 +1,16 @@
+PODS:
+  - M13OrderedDictionary (1.1.0)
+
+DEPENDENCIES:
+  - M13OrderedDictionary (= 1.1.0)
+
+SPEC REPOS:
+  trunk:
+    - M13OrderedDictionary
+
+SPEC CHECKSUMS:
+  M13OrderedDictionary: 6e157fe9c82aa6b3cd7198f5c5c30c7a6834c4a6
+
+PODFILE CHECKSUM: 3c47d6d2af1ee4bf1fe549f207bc999c99a0987c
+
+COCOAPODS: 1.9.2

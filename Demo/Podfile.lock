@@ -1,0 +1,23 @@
+PODS:
+  - M13OrderedDictionary (1.1.0)
+  - SortedJSONCoder (0.0.1):
+    - M13OrderedDictionary (= 1.1.0)
+
+DEPENDENCIES:
+  - SortedJSONCoder (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - M13OrderedDictionary
+
+EXTERNAL SOURCES:
+  SortedJSONCoder:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  M13OrderedDictionary: 6e157fe9c82aa6b3cd7198f5c5c30c7a6834c4a6
+  SortedJSONCoder: 19173f110f6c4fc3506355078afea78ee696a7db
+
+PODFILE CHECKSUM: 0b9f69ea9729ff2fea2214b2daaa5931982ba223
+
+COCOAPODS: 1.9.2
