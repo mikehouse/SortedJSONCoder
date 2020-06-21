@@ -167,6 +167,11 @@ assert(sha256 == rootObject.sha256)
 ## Tests
 
 Base cases covered.
+
+## TODO
+
+- Pretty json formatting
+- Support custom indents for json elements
  
 ## License
 
