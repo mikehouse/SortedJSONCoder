@@ -86,4 +86,42 @@
     XCTAssertEqualObjects(actual, expected);
 }
 
+- (void)testPrettyPrinted {
+    NSDictionary *target = @{
+            @"sessionInfo": @{
+                    @"quarantineInfo": @[],
+                    @"quarantinedItems": @(0)
+            }};
+    SortedJSONEncoder *jsonEncoder = [SortedJSONEncoder new];
+    jsonEncoder.pretty = true;
+    NSError *error = NULL;
+    NSData *data = [jsonEncoder encode:target options:NSLiteralSearch error:&error];
+
+    XCTAssertNil(error);
+
+    NSString *expected = @"{\n\t\"sessionInfo\": {\n\t\t\"quarantineInfo\": [\n\t\t],\n\t\t\"quarantinedItems\": 0\n\t}\n}";
+    NSString *actual = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+    XCTAssertEqualObjects(actual, expected);
+}
+
+- (void)testPrettyPrinted2 {
+    NSDictionary *target = @{
+            @"sessionInfo": @{
+                    @"quarantineInfo": @[@{@"aa":@"bb"}],
+                    @"quarantinedItems": @(0)
+            }};
+    SortedJSONEncoder *jsonEncoder = [SortedJSONEncoder new];
+    jsonEncoder.pretty = true;
+    NSError *error = NULL;
+    NSData *data = [jsonEncoder encode:target options:NSLiteralSearch error:&error];
+
+    XCTAssertNil(error);
+
+    NSString *expected = @"{\n\t\"sessionInfo\": {\n\t\t\"quarantineInfo\": [\n\t\t\t{\n\t\t\t\t\"aa\": \"bb\"\n\t\t\t}\n\t\t],\n\t\t\"quarantinedItems\": 0\n\t}\n}";
+    NSString *actual = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+    XCTAssertEqualObjects(actual, expected);
+}
+
 @end

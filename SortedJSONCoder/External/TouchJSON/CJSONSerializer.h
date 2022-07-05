@@ -41,6 +41,8 @@ typedef NSUInteger EJSONSerializationOptions;
 }
 
 @property (readwrite, nonatomic, assign) EJSONSerializationOptions options;
+@property (readwrite, nonatomic, assign) int depth;
+@property (readwrite, nonatomic, assign) BOOL pretty;
 
 + (CJSONSerializer *)serializer;
 

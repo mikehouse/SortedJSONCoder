@@ -25,6 +25,7 @@
     M13OrderedDictionary *ordered = [M13OrderedDictionary
         deepOrderedDictionaryWithDictionary:jsonObject options:options];
     CJSONSerializer *serializer = [CJSONSerializer serializer];
+    serializer.pretty = self.pretty;
     return [serializer serializeObject:ordered error:error];
 }
 
@@ -34,6 +35,7 @@
     M13OrderedDictionary *ordered = [M13OrderedDictionary
         deepOrderedDictionaryWithDictionary:jsonObject comparator:comparator];
     CJSONSerializer *serializer = [CJSONSerializer serializer];
+    serializer.pretty = self.pretty;
     return [serializer serializeObject:ordered error:error];
 }
 

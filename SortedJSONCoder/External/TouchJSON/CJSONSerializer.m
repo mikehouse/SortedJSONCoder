@@ -302,9 +302,19 @@ static NSData *kTrue = NULL;
     {
     NSMutableData *theData = [NSMutableData data];
 
-    [theData appendBytes:"[" length:1];
+    if (self.pretty) {
+        [theData appendBytes:" [" length:2];
+    } else {
+        [theData appendBytes:"[" length:1];
+    }
+
+    self.depth += 1;
 
     NSEnumerator *theEnumerator = [inArray objectEnumerator];
+    NSString *openPadding = [self jsonPaddingString];
+    if (openPadding.length > 0 && [inArray count] > 0) {
+        [theData appendData:[openPadding dataUsingEncoding:NSASCIIStringEncoding]];
+    }
     id theValue = NULL;
     NSUInteger i = 0;
     while ((theValue = [theEnumerator nextObject]) != NULL)
@@ -315,22 +325,51 @@ static NSData *kTrue = NULL;
             return(NULL);
             }
         [theData appendData:theValueData];
-        if (++i < [inArray count])
+        if (++i < [inArray count]) {
             [theData appendBytes:"," length:1];
+            NSString *nextPadding = [self jsonPaddingString];
+            if (nextPadding.length > 0) {
+                [theData appendData:[nextPadding dataUsingEncoding:NSASCIIStringEncoding]];
+            }
+        }
         }
 
+    self.depth -= 1;
+    NSString *closePadding = [self jsonPaddingString];
+    if (closePadding.length > 0) {
+        [theData appendData:[closePadding dataUsingEncoding:NSASCIIStringEncoding]];
+    }
     [theData appendBytes:"]" length:1];
 
     return(theData);
     }
+
+- (NSString *)jsonPaddingString {
+    if (self.pretty == false) {
+        return @"";
+    }
+    NSMutableString *padding = [[NSMutableString alloc] init];
+    if (self.depth >= 0) {
+        [padding appendString:@"\n"];
+    }
+    for (int i = 0; i < self.depth; ++i) {
+        [padding appendString:@"\t"];
+    }
+    return padding;
+}
 
 - (NSData *)serializeDictionary:(id)inDictionary error:(NSError **)outError
     {
     NSMutableData *theData = [NSMutableData data];
 
     [theData appendBytes:"{" length:1];
-
+    self.depth += 1;
     NSArray *theKeys = [inDictionary allKeys];
+    NSString *openPadding = [self jsonPaddingString];
+    if (openPadding.length > 0 && theKeys.count > 0) {
+        [theData appendData:[openPadding dataUsingEncoding:NSASCIIStringEncoding]];
+    }
+
     NSEnumerator *theEnumerator = [theKeys objectEnumerator];
     NSString *theKey = NULL;
     while ((theKey = [theEnumerator nextObject]) != NULL)
@@ -350,14 +389,30 @@ static NSData *kTrue = NULL;
 
 
         [theData appendData:theKeyData];
-        [theData appendBytes:":" length:1];
+        if ([theValue isKindOfClass:[NSDictionary class]]
+                || [theValue isKindOfClass:[NSArray class]]
+                || self.pretty == false) {
+            [theData appendBytes:":" length:1];
+        } else {
+            [theData appendBytes:": " length:2];
+        }
         [theData appendData:theValueData];
 
-        if (theKey != [theKeys lastObject])
+        if (theKey != [theKeys lastObject]) {
             [theData appendData:[@"," dataUsingEncoding:NSASCIIStringEncoding]];
+            NSString *nextPadding = [self jsonPaddingString];
+            if (nextPadding.length > 0) {
+                [theData appendData:[nextPadding dataUsingEncoding:NSASCIIStringEncoding]];
+            }
+        }
         }
 
-    [theData appendBytes:"}" length:1];
+        self.depth -= 1;
+        NSString *closePadding = [self jsonPaddingString];
+        if (closePadding.length > 0) {
+            [theData appendData:[closePadding dataUsingEncoding:NSASCIIStringEncoding]];
+        }
+        [theData appendBytes:"}" length:1];
 
     return(theData);
     }

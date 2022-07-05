@@ -9,6 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SortedJSONEncoder : NSObject
 
+@property (readwrite, nonatomic, assign) BOOL pretty;
+
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 ///

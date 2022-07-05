@@ -111,6 +111,13 @@ let data = try encoder.encode(dict, comparator: { (s1: String, s2: String) -> Co
 try data.write(to: URL(string: "/path/to/out.json")!)
 ```
 
+#### Pretty Printed 
+
+```swift
+let encoder = SortedJSONEncoder()
+encoder.pretty = true
+```
+
 ## Why ?
 
 Say we have a json file from server side:
