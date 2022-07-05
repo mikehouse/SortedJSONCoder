@@ -19,7 +19,8 @@ Pod::Spec.new do |spec|
   spec.homepage     = "https://github.com/mikehouse/SortedJSONCoder"
   spec.license      = { :type => "MIT", :file => "LICENSE" }
   spec.author       = { "Mikhail Demidov" => "mike.house.nsk@gmail.com" }
-  spec.platform     = :ios, "11.0"
+  spec.ios.deployment_target = '11.0'
+  spec.osx.deployment_target = '10.15'
   spec.source       = { :git => "https://github.com/mikehouse/SortedJSONCoder.git", :tag => "#{spec.version}" }
   spec.framework    = "Foundation"
   spec.requires_arc = true
