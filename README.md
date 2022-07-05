@@ -17,7 +17,7 @@
 ### Cocoapods
 
 ```ruby
-pod 'SortedJSONCoder', :git => 'https://github.com/mikehouse/SortedJSONCoder.git', :tag => '0.0.2'
+pod 'SortedJSONCoder', :git => 'https://github.com/mikehouse/SortedJSONCoder.git', :commit => 'cc868564'
 ```
 No way make support of `SPM` and `Carthage` as used third-party libraries do not support these.  
  
